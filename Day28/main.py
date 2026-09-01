@@ -30,12 +30,12 @@ def start_timer():
     reps += 1
 
     if reps % 8 == 0:
-        count_down(LONG_BREAK_MIN)
+        count_down(LONG_BREAK_MIN * 60)
         title_label.config(text="Break", fg=PINK)
         window.attributes('-topmost', 1)
         window.attributes('-topmost', 0)
     elif reps % 2 == 0:
-        count_down(SHORT_BREAK_MIN)
+        count_down(SHORT_BREAK_MIN * 60)
         title_label.config(text="Break", fg=RED)
         window.attributes('-topmost', 1)
         window.attributes('-topmost', 0)
@@ -43,7 +43,7 @@ def start_timer():
         title_label.config(text="Work", fg=GREEN)
         window.attributes('-topmost', 1)
         window.attributes('-topmost', 0)
-        count_down(WORK_MIN)
+        count_down(WORK_MIN * 60)
 
 
 def count_down(count ):
