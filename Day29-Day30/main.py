@@ -3,6 +3,7 @@ import tkinter.ttk as ttk
 from tkinter import messagebox
 import random
 import pyperclip
+import json
 
 window = tk.Tk()
 
@@ -19,9 +20,9 @@ def generate_password():
     numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
-    password_letters = [random.choice(letters) for i in range(random.randint(8, 10))]
-    password_symbols = [random.choice(symbols) for i in range(random.randint(2, 4))]
-    password_numbers = [random.choice(numbers) for i in range(random.randint(2,4))]
+    password_letters = [random.choice(letters) for _ in range(random.randint(8, 10))]
+    password_symbols = [random.choice(symbols) for _ in range(random.randint(2, 4))]
+    password_numbers = [random.choice(numbers) for _ in range(random.randint(2,4))]
 
     password_list = password_letters + password_symbols + password_numbers
 
@@ -37,18 +38,34 @@ def save_password():
     website_data = website_entry.get()
     email_data = email_entry.get()
     password_data = password_entry.get()
+    new_data = {
+        website_data: {
+            "email": email_data,
+            "password": password_data
+        }
+    }
 
     if website_data == "" or email_data == "" or password_data == "":
         messagebox.showerror(title="Empty fields!", message="You can't leave any field empty!")
     else:
-        is_ok = messagebox.askokcancel(title=f"{website_data} confirmation", message=f"You want to save these credentials "
-                                                                             f"for {website_data}?")
-        if is_ok:
-            with open("data.txt", mode="a") as file:
-                file.write(f"{website_data}  |  {email_data}  |  {password_data}\n")
-            website_entry.delete(0, tk.END)
-            email_entry.delete(0, tk.END)
-            password_entry.delete(0, tk.END)
+        try:
+            with open("data.json", mode="r") as file:
+                data = json.load(file)
+        except FileNotFoundError:
+            with open("data.json", "w") as file:
+                json.dump(new_data, file, indent= 4)
+        except json.JSONDecodeError:
+            with open("data.json", "w") as file:
+                json.dump(new_data, file, indent= 4)
+        else:
+            data.update(new_data)
+            with open("data.json", "w") as file:
+                json.dump(data, file, indent=4)
+        finally:
+                website_entry.delete(0, tk.END)
+                email_entry.delete(0, tk.END)
+                password_entry.delete(0, tk.END)
+                messagebox.showinfo(title="Password saved!", message="Password saved!")
 
 
 website_label = tk.Label(text="Website:")
