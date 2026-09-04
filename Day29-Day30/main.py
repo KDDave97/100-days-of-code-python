@@ -67,6 +67,20 @@ def save_password():
                 password_entry.delete(0, tk.END)
                 messagebox.showinfo(title="Password saved!", message="Password saved!")
 
+def search_login():
+    try:
+        with open("data.json", mode="r") as file:
+            data = json.load(file)
+            searched_website = website_entry.get()
+            email_entry.insert(tk.END, data[searched_website]["email"])
+            password_entry.insert(tk.END, data[searched_website]["password"])
+            pyperclip.copy(data[searched_website]["password"])
+    except KeyError:
+        messagebox.showwarning(title="Record not found", message="Record not found!\nType in another website name")
+    except FileNotFoundError:
+        messagebox.showwarning(title="No saved websites", message="There are no saved websites yet!")
+
+
 
 website_label = tk.Label(text="Website:")
 website_label.grid(column=0, row=1)
@@ -79,11 +93,13 @@ password_label.grid(column=0, row=3)
 
 website_entry = ttk.Entry()
 website_entry.focus()
-website_entry.grid(column=1, row=1, columnspan=2, sticky="EW")
+website_entry.grid(column=1, row=1, sticky="EW")
+
+search_entry = ttk.Button(text="Search", command=search_login)
+search_entry.grid(column=2, row=1, sticky="EW")
 
 email_entry = ttk.Entry()
 email_entry.grid(column=1, row=2, columnspan=2, sticky="EW")
-
 
 password_entry = ttk.Entry()
 password_entry.grid(column=1, row=3, sticky="EW")
