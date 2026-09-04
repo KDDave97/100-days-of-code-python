@@ -72,9 +72,9 @@ def search_login():
         with open("data.json", mode="r") as file:
             data = json.load(file)
             searched_website = website_entry.get()
-            email_entry.insert(tk.END, data[searched_website]["email"])
-            password_entry.insert(tk.END, data[searched_website]["password"])
             pyperclip.copy(data[searched_website]["password"])
+            messagebox.showinfo(title=searched_website, message=f"Email: {data[searched_website]["email"]}\n"
+                                                                   f"Password: {data[searched_website]["password"]}")
     except KeyError:
         messagebox.showwarning(title="Record not found", message="Record not found!\nType in another website name")
     except FileNotFoundError:
