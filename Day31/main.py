@@ -12,7 +12,7 @@ word_index = 0
 window = tk.Tk()
 window.title("Flash Cards")
 window.config(bg=BACKGROUND_COLOR, padx=50, pady=50)
-
+window.resizable(False, False)
 
 def new_round():
     global data
