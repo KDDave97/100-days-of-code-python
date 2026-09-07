@@ -4,3 +4,5 @@ __pycache__/
 *.pyc
 /Day29-Day30/data.txt
 /Day29-Day30/data.json
+/Day32/smtp.py
+/Day32/motivational.py
