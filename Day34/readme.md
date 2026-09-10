@@ -1,0 +1,1 @@
+A quiz game that works with live data by API calls from Open Trivia Database.
