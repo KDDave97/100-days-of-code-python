@@ -1,6 +1,7 @@
+import random
+
 import tkinter as tk
 import pandas
-import random
 
 data = pandas.read_csv("french_words.csv")
 
