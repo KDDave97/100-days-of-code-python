@@ -27,5 +27,5 @@ if price_whole < threshold_price:
     with smtplib.SMTP("smtp.gmail.com") as connection:
         connection.starttls()
         connection.login(user=my_email, password=password)
-        connection.sendmail(from_addr=my_email, to_addrs="kuruczdavid997@gmail.com", msg=f"Subject:Price below threshold\n\n"
+        connection.sendmail(from_addr=my_email, to_addrs=my_email, msg=f"Subject:Price below threshold\n\n"
                                                                                          f"{message}".encode("utf-8"))
