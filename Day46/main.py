@@ -33,7 +33,10 @@ for i in range(len(song_name)):
     results.append(spotify.search(q=f"track:{song_name[i]} artist:{artist_name[i]}", type="track", limit=10))
 
 for uri in results:
-    track_uris.append(uri["tracks"]["items"][0]["uri"])
+    try:
+        track_uris.append(uri["tracks"]["items"][0]["uri"])
+    except IndexError:
+        print("Couldn't find this track")
 
 playlists = spotify.current_user_playlists(limit=50, offset=0)
 current_playlist = playlists["items"][0]["id"]
