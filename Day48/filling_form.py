@@ -10,9 +10,9 @@ driver.get("https://appbrewery.github.io/fake-newsletter-signup/")
 
 textbox_list = driver.find_elements(By.CSS_SELECTOR, value="input")
 
-first_name = textbox_list[0]
-last_name = textbox_list[1]
-email = textbox_list[2]
+first_name = driver.find_element(By.NAME, value="fName")
+last_name = driver.find_element(By.NAME, value="lName")
+email = driver.find_element(By.NAME, value="email")
 
 first_name.send_keys("David")
 last_name.send_keys("Kurucz")
