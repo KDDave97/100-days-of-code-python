@@ -1,6 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 import os
@@ -30,8 +29,16 @@ password_textbox.send_keys(ACCOUNT_PASSWORD)
 login_button = wait.until(ec.element_to_be_clickable((By.ID, "submit-button")))
 login_button.click()
 
-tuesday = driver.find_element(By.CSS_SELECTOR, value="")
-tuesday.click()
+days = wait.until(ec.presence_of_all_elements_located((By.CSS_SELECTOR, "div[id^='day-group-']")))
+for day in days:
+    day_text = day.find_element(By.CSS_SELECTOR, value="h2[id^='day-title-']").text
+    if "Wed" in day_text:
+        cards = day.find_elements(By.CSS_SELECTOR, value="div[id^='class-card-']")
+        for card in cards:
+            time_text = card.find_element(By.CSS_SELECTOR, value="p[id^='class-time-']").text
+            if "6:00 PM" in time_text:
+                book_class_button = card.find_element(By.CSS_SELECTOR, "button[id^='book-button-']")
+                book_class_button.click()
 
 
 
